@@ -30,7 +30,7 @@ class CreatePermissionTables extends Migration
             $table->timestamps();
         });
 
-        /* Schema::create($tableNames['model_has_permissions'], function (Blueprint $table) use ($tableNames, $columnNames) {
+        Schema::create($tableNames['model_has_permissions'], function (Blueprint $table) use ($tableNames, $columnNames) {
             $table->unsignedInteger('permission_id');
 
             $table->string('model_type');
@@ -44,21 +44,7 @@ class CreatePermissionTables extends Migration
 
             $table->primary(['permission_id', $columnNames['model_morph_key'], 'model_type'],
                     'model_has_permissions_permission_model_type_primary');
-        }); */
-
-        Schema::create($tableNames['model_has_permissions'], function (Blueprint $table) use ($tableNames, $columnNames) {
-            $table->unsignedInteger('permission_id');
-            $table->string('model_type');
-            $table->unsignedBigInteger($columnNames['model_morph_key']);
-            
-            // Añadir clave primaria
-            $table->primary(['permission_id', $columnNames['model_morph_key'], 'model_type']);
-        
-            $table->foreign('permission_id')
-                ->references('id')
-                ->on($tableNames['permissions'])
-                ->onDelete('cascade');
-        });        
+        });
 
         Schema::create($tableNames['model_has_roles'], function (Blueprint $table) use ($tableNames, $columnNames) {
             $table->unsignedInteger('role_id');
